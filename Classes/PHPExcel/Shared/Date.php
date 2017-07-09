@@ -154,7 +154,14 @@ class PHPExcel_Shared_Date
      */
     public static function ExcelToPHPObject($dateValue = 0)
     {
-        $dateTime = self::ExcelToPHP($dateValue);
+        try
+        {
+            $dateTime = self::ExcelToPHP($dateValue);
+        }
+        catch( \ErrorException $ex )
+        {
+            return null ;
+        }
         $days = floor($dateTime / 86400);
         $time = round((($dateTime / 86400) - $days) * 86400);
         $hours = round($time / 3600);
